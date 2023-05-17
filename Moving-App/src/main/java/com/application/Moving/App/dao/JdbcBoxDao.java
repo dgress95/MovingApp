@@ -6,7 +6,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,18 +111,48 @@ public class JdbcBoxDao implements BoxDao {
     }
 
     @Override
-    public Box create(Box newBox) {
-        return null;
+    public Box create(Box newBox, int categoryId) {
+        Integer id;
+        String sql = "insert into box (user_id, storage_location) " +
+                "values (2, 'Basement') " +
+                "returning box_id;";
+        id = jdbcTemplate.queryForObject(sql, Integer.class, newBox.getUserId(),
+                newBox.getStorageLocation());
+        Box box = get(id);
+        box.setCategoryId(categoryId);
+        return box;
+    }
+
+    public int addBoxToCategory(int boxId, int categoryId) {
+        String sql = "insert into box_category (box_id, category_id) values (?, ?);";
+        int count = jdbcTemplate.update(sql, boxId, categoryId);
+        return count;
+    }
+
+    public int removeBoxFromCategory(int boxId, int categoryId) {
+        String sql = "delete from box_category where box_id = ? AND category_id = ?;";
+        int count = jdbcTemplate.update(sql, boxId, categoryId);
+        return count;
     }
 
     @Override
     public Box update(Box modifiedBox) {
-        return null;
+        String sqlLocation = "update box set storage_location = ? " +
+                "where box_id = ?;";
+        jdbcTemplate.update(sqlLocation, modifiedBox.getStorageLocation(), modifiedBox.getBoxId());
+
+        String sqlCategory = "UPDATE box_category " +
+                "SET category_id = ? " +
+                "WHERE box_id = ?;";
+        jdbcTemplate.update(sqlCategory, modifiedBox.getCategoryId(), modifiedBox.getBoxId());
+        return get(modifiedBox.getBoxId());
     }
 
     @Override
     public int delete(int boxId) {
-        return 0;
+        String sql = "delete from box where box_id = ?;";
+        int count = jdbcTemplate.update(sql, boxId);
+        return count;
     }
 
     private Box mapRowToBox(SqlRowSet rowSet) {
