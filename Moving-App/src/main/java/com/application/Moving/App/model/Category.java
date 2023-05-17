@@ -1,8 +1,12 @@
 package com.application.Moving.App.model;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Category {
 
     private int categoryId;
+
+    @NotBlank( message = "The field 'name' is required.")
     private String name;
 
     public Category() {};
