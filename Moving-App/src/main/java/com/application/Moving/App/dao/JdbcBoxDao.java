@@ -12,9 +12,6 @@ import java.util.List;
 @Component
 public class JdbcBoxDao implements BoxDao {
 
-    // consider creating some methods that add a box
-    // to a category and remove boxes from categories
-
     private JdbcTemplate jdbcTemplate;
 
     public JdbcBoxDao(DataSource dataSource) {

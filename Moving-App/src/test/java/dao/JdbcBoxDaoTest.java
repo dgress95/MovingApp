@@ -80,6 +80,14 @@ public class JdbcBoxDaoTest extends BaseDaoTests {
         assertBoxesMatch("getByUserId returned wrong or partial data", BOX_1, boxes.get(0));
     }
 
+    @Test
+    public void searchByLocation_returns_expected_boxes() {
+        List<Box> boxes = dao.searchByLocation(BOX_1.getStorageLocation());
+        Assert.assertEquals("searchByLocation failed to return all boxes", 3, boxes.size());
+        assertBoxesMatch("searchByLocation returned wrong or partial data", BOX_1, boxes.get(0));
+        assertBoxesMatch("searchByLocation returned wrong or partial data", BOX_3, boxes.get(2));
+    }
+
 
     private void assertBoxesMatch(String message, Box expected, Box actual) {
         Assert.assertEquals("BoxId is incorrect", expected.getBoxId(), actual.getBoxId());

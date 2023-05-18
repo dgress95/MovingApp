@@ -10,12 +10,15 @@ public class Item {
 
     private int boxId;
     private int itemId;
+    @NotBlank ( message = "Cart Items must include a userId.")
     private int userId;
     private int categoryId;
 
+    private String storageLocation;
+
     public Item(){};
 
-    public Item(String name, int quantity, String description, int boxId, int itemId, int userId, int categoryId) {
+    public Item(String name, int quantity, String description, int boxId, int itemId, int userId, int categoryId, String storageLocation) {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
@@ -23,6 +26,7 @@ public class Item {
         this.itemId = itemId;
         this.userId = userId;
         this.categoryId = categoryId;
+        this.storageLocation = storageLocation;
     }
 
     public String getName() {
@@ -80,6 +84,10 @@ public class Item {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
+
+    public String getStorageLocation() { return storageLocation; }
+
+    public void setStorageLocation(String storageLocation) { this.storageLocation = storageLocation; }
 
     @Override
     public String toString() {

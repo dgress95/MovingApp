@@ -47,7 +47,7 @@ public interface ItemDao {
      * @param boxId the name of the box associated with the item
      * @return List of all the Item objects associated to the box, or an empty list if none are found.
      */
-    List<Item> getByBoxId(int boxId);
+    void addItemToBox(int itemId);
 
     /**
      * Get all items from the datastore by search term.
