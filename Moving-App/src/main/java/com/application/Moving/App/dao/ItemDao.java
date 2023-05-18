@@ -47,7 +47,8 @@ public interface ItemDao {
      * @param boxId the name of the box associated with the item
      * @return List of all the Item objects associated to the box, or an empty list if none are found.
      */
-    void addItemToBox(int itemId);
+    List<Item> getByBoxId(int boxId);
+
 
     /**
      * Get all items from the datastore by search term.
@@ -79,7 +80,7 @@ public interface ItemDao {
      * @param itemId The id of the Item to remove. If the id is not found, no error will occur.
      * @return count of items removed
      */
-    int delete(int itemId);
+    void delete(int itemId);
 
 
 }

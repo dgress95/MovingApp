@@ -132,7 +132,7 @@ public class JdbcBoxDao implements BoxDao {
     }
 
     @Override
-    public Box update(Box modifiedBox) {
+    public Box update(Box modifiedBox) { // not sure if this is the best way...
         String sqlLocation = "update box set storage_location = ? " +
                 "where box_id = ?;";
         jdbcTemplate.update(sqlLocation, modifiedBox.getStorageLocation(), modifiedBox.getBoxId());

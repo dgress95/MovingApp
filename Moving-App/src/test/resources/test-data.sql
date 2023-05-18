@@ -13,16 +13,16 @@ INSERT INTO category (name) VALUES
 	('Living Room'),
 	('Dining Room');
 
-INSERT INTO item (user_id, category_id, name, quantity, storage_location, description) VALUES
-	(1, 3, 'Toaster', 1, null, 'Black toaster'),
-	(1, 6, 'Side Table', 1, null, 'Black with tan insert'),
-	(1, 3, 'Coffee Maker', 1, null, 'Black and Decker'),
-	(1, 1, 'Pillow', 2, null, 'Blue striped pillow'),
-	(2, 6, 'DVDs', 20, null, 'Assorted DVDs'),
-	(2, 7, 'Dining Table', 1, 'Storage Unit','Dining room table and chairs'),
-	(1, 2, 'Toiletries', 1, null, 'Toothbrush, toothpaste, make-up, etc.'),
-	(2, 4, 'Detergent', 1, null, 'Laundry detergent'),
-	(2, 5, 'Lawn Mower', 1, null, null);
+INSERT INTO item (user_id, name, quantity, description) VALUES
+	(1, 'Toaster', 1, 'Black toaster'),
+	(1, 'Side Table', 1, 'Black with tan insert'),
+	(1, 'Coffee Maker', 1, 'Black and Decker'),
+	(1, 'Pillow', 2, 'Blue striped pillow'),
+	(2, 'DVDs', 20, 'Assorted DVDs'),
+	(2, 'Dining Table', 1,'Dining room table and chairs'),
+	(1, 'Toiletries', 1, 'Toothbrush, toothpaste, make-up, etc.'),
+	(2, 'Detergent', 1, 'Laundry detergent'),
+	(2, 'Lawn Mower', 1, null);
 
 INSERT INTO box (user_id, storage_location) VALUES
 	(1, 'Storage Unit'),

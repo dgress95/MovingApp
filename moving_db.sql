@@ -29,13 +29,10 @@ CREATE TABLE box (
 CREATE TABLE item (
 	item_id serial,
 	user_id int NOT NULL,
-	category_id int,
 	name varchar(100) NOT NULL,
 	quantity int NOT NULL DEFAULT(1),
-	storage_location varchar(100),
 	description varchar(100),
 	CONSTRAINT PK_item PRIMARY KEY (item_id),
-	CONSTRAINT FK_item_category FOREIGN KEY (category_id) REFERENCES category(category_id),
 	CONSTRAINT FK_item_user FOREIGN KEY (user_id) REFERENCES app_user(user_id)
 );
 
@@ -46,6 +43,7 @@ CREATE TABLE box_category (
 	CONSTRAINT FK_box_category_box FOREIGN KEY (box_id) REFERENCES box(box_id),
 	CONSTRAINT FK_box_category_category FOREIGN KEY (category_id) REFERENCES category(category_id)
 );
+CREATE UNIQUE INDEX IX_box_category ON box_category(box_id, category_id);
 
 CREATE TABLE item_box (
 	item_id int NOT NULL,
@@ -54,6 +52,7 @@ CREATE TABLE item_box (
 	CONSTRAINT FK_item_box_item FOREIGN KEY (item_id) REFERENCES item(item_id),
 	CONSTRAINT FK_item_box_box FOREIGN KEY (box_id) REFERENCES box(box_id)
 );
+CREATE UNIQUE INDEX IX_item_box ON item_box(item_id, box_id);
 
 INSERT INTO app_user (first_name, last_name, username, password) VALUES
 	('Diane', 'Gress', 'dgress', 'password1'),
@@ -68,16 +67,16 @@ INSERT INTO category (name) VALUES
 	('Living Room'),
 	('Dining Room');
 	
-INSERT INTO item (user_id, category_id, name, quantity, storage_location, description) VALUES
-	(1, 3, 'Toaster', 1, null, 'Black toaster'),
-	(1, 6, 'Side Table', 1, null, 'Black with tan insert'),
-	(1, 3, 'Coffee Maker', 1, null, 'Black and Decker'),
-	(1, 1, 'Pillow', 2, null, 'Blue striped pillow'),
-	(2, 6, 'DVDs', 20, null, 'Assorted DVDs'),
-	(2, 7, 'Dining Table', 1, 'Storage Unit','Dining room table and chairs'),
-	(1, 2, 'Toiletries', 1, null, 'Toothbrush, toothpaste, make-up, etc.'),
-	(2, 4, 'Detergent', 1, null, 'Laundry detergent'),
-	(2, 5, 'Lawn Mower', 1, null, null);
+INSERT INTO item (user_id, name, quantity, description) VALUES
+	(1, 'Toaster', 1, 'Black toaster'),
+	(1, 'Side Table', 1, 'Black with tan insert'),
+	(1, 'Coffee Maker', 1, 'Black and Decker'),
+	(1, 'Pillow', 2, 'Blue striped pillow'),
+	(2, 'DVDs', 20, 'Assorted DVDs'),
+	(2, 'Dining Table', 1,'Dining room table and chairs'),
+	(1, 'Toiletries', 1, 'Toothbrush, toothpaste, make-up, etc.'),
+	(2, 'Detergent', 1, 'Laundry detergent'),
+	(2, 'Lawn Mower', 1, null);
 	
 INSERT INTO box (user_id, storage_location) VALUES
 	(1, 'Storage Unit'),
