@@ -62,7 +62,7 @@ public interface BoxDao {
      * @param newBox the Box object to add.
      * @return The added Box object with its new id and any default values filled in.
      */
-    Box create(Box newBox, int categoryId);
+    Box create(Box newBox);
 
     /**
      * Update a box in the datastore.

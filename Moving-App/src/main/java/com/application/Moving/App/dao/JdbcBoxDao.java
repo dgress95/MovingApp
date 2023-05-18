@@ -45,8 +45,9 @@ public class JdbcBoxDao implements BoxDao {
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, boxId);
         if (results.next()) {
             box = mapRowToBox(results);
+            return box;
         }
-        return box;
+        return null;
     }
 
     @Override
@@ -111,16 +112,14 @@ public class JdbcBoxDao implements BoxDao {
     }
 
     @Override
-    public Box create(Box newBox, int categoryId) {
-        Integer id;
+    public Box create(Box newBox) {
         String sql = "insert into box (user_id, storage_location) " +
-                "values (2, 'Basement') " +
+                "values (?, ?) " +
                 "returning box_id;";
-        id = jdbcTemplate.queryForObject(sql, Integer.class, newBox.getUserId(),
+        int id = jdbcTemplate.queryForObject(sql, Integer.class, newBox.getUserId(),
                 newBox.getStorageLocation());
-        Box box = get(id);
-        box.setCategoryId(categoryId);
-        return box;
+        newBox.setBoxId(id);
+        return newBox;
     }
 
     public int addBoxToCategory(int boxId, int categoryId) {
