@@ -81,6 +81,30 @@ public class JdbcItemDaoTest extends BaseDaoTests {
         assertItemsMatch("searchByLocation returned wrong or partial data", ITEM_1, items.get(0));
     }
 
+    @Test
+    public void searchByName_returns_expected_items() {
+        List<Item> items = dao.searchByName(ITEM_1.getName());
+        Assert.assertEquals("searchByName failed to return all items", 1, items.size());
+        assertItemsMatch("searchByName returned wrong or partial data", ITEM_1, items.get(0));
+    }
+
+    @Test
+    public void update_returns_updated_item() {
+        Item item = new Item();
+        item.setItemId(ITEM_1.getItemId());
+
+        item.setDescription("Description");
+        item.setQuantity(3);
+        item.setName("Name");
+        item.setUserId(1);
+
+        Item udpatedItem = dao.update(item);
+        int newId = udpatedItem.getItemId();
+        Item retrievedItem = dao.get(newId);
+
+        assertItemsMatch("update did not save correct data", udpatedItem, retrievedItem);
+    }
+
     private void assertItemsMatch(String message, Item expected, Item actual) {
         Assert.assertEquals("ItemId is incorrect", expected.getItemId(), actual.getItemId());
         Assert.assertEquals("UserId is incorrect", expected.getUserId(), actual.getUserId());

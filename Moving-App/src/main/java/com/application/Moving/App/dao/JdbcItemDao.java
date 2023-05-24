@@ -125,7 +125,8 @@ public class JdbcItemDao implements ItemDao {
                 "join item_box ib on i.item_id = ib.item_id " +
                 "join box b on ib.box_id = b.box_id " +
                 "join box_category bc on b.box_id = bc.box_id " +
-                "where i.name ILIKE ?;";
+                "where i.name ILIKE ?" +
+                "order by i.item_id;";
         String filterString = '%' + itemName + '%';
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, filterString);
         while (results.next()) {
@@ -151,7 +152,7 @@ public class JdbcItemDao implements ItemDao {
         String sql = "update item set user_id = ?, name = ?, quantity = ?, description = ? " +
                 "where item_id = ?;";
         jdbcTemplate.update(sql, modifiedItem.getUserId(), modifiedItem.getName(), modifiedItem.getQuantity(),
-                modifiedItem.getDescription());
+                modifiedItem.getDescription(), modifiedItem.getItemId());
         return get(modifiedItem.getItemId());
     }
 
