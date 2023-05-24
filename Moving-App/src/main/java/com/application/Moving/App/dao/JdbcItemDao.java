@@ -107,8 +107,26 @@ public class JdbcItemDao implements ItemDao {
                 "join item_box ib on i.item_id = ib.item_id " +
                 "join box b on ib.box_id = b.box_id " +
                 "join box_category bc on b.box_id = bc.box_id " +
-                "where b.storage_location ILIKE ?;";
+                "where b.storage_location ILIKE ?" +
+                "order by i.item_id;";
         String filterString = '%' + locationName + '%';
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, filterString);
+        while (results.next()) {
+            Item item = mapRowToItem(results);
+            items.add(item);
+        }
+        return items;
+    }
+
+    public List<Item> searchByName(String itemName) {
+        List<Item> items = new ArrayList<>();
+        String sql = "select i.item_id, i.user_id, bc.category_id, i.name, i.quantity, b.storage_location, i.description " +
+                "from item i " +
+                "join item_box ib on i.item_id = ib.item_id " +
+                "join box b on ib.box_id = b.box_id " +
+                "join box_category bc on b.box_id = bc.box_id " +
+                "where i.name ILIKE ?;";
+        String filterString = '%' + itemName + '%';
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, filterString);
         while (results.next()) {
             Item item = mapRowToItem(results);

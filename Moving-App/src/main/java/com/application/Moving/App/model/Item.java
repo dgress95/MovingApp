@@ -7,26 +7,32 @@ public class Item {
     private String name;
     private int quantity;
     private String description;
-
-    private int boxId;
     private int itemId;
     @NotBlank ( message = "Cart Items must include a userId.")
     private int userId;
+
     private int categoryId;
 
     private String storageLocation;
 
     public Item(){};
 
-    public Item(String name, int quantity, String description, int boxId, int itemId, int userId, int categoryId, String storageLocation) {
+    public Item(int itemId, int userId, int categoryId, String name, int quantity, String storageLocation, String description) {
         this.name = name;
         this.quantity = quantity;
         this.description = description;
-        this.boxId = boxId;
         this.itemId = itemId;
         this.userId = userId;
         this.categoryId = categoryId;
         this.storageLocation = storageLocation;
+    }
+
+    public Item(int itemId, int userId, String name, int quantity, String description) {
+        this.name = name;
+        this.quantity = quantity;
+        this.description = description;
+        this.itemId = itemId;
+        this.userId = userId;
     }
 
     public String getName() {
@@ -53,14 +59,6 @@ public class Item {
         this.description = description;
     }
 
-    public int getBoxId() {
-        return boxId;
-    }
-
-    public void setBoxId(int boxId) {
-        this.boxId = boxId;
-    }
-
     public int getItemId() {
         return itemId;
     }
@@ -85,9 +83,13 @@ public class Item {
         this.categoryId = categoryId;
     }
 
-    public String getStorageLocation() { return storageLocation; }
+    public String getStorageLocation() {
+        return storageLocation;
+    }
 
-    public void setStorageLocation(String storageLocation) { this.storageLocation = storageLocation; }
+    public void setStorageLocation(String storageLocation) {
+        this.storageLocation = storageLocation;
+    }
 
     @Override
     public String toString() {
@@ -95,10 +97,8 @@ public class Item {
                 "name='" + name + '\'' +
                 ", quantity=" + quantity +
                 ", description='" + description + '\'' +
-                ", boxId=" + boxId +
                 ", itemId=" + itemId +
                 ", userId=" + userId +
-                ", categoryId=" + categoryId +
                 '}';
     }
 }

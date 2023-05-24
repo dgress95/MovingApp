@@ -61,6 +61,9 @@ public class JdbcCategoryDao implements CategoryDao {
 
     @Override
     public void delete(int categoryId) {
+        String sqlOne = "delete from box_category where category_id = ?;";
+        jdbcTemplate.update(sqlOne, categoryId);
+
         String deleteCategory = "DELETE from category " +
                 "WHERE category_id = ?;";
         jdbcTemplate.update(deleteCategory, categoryId);

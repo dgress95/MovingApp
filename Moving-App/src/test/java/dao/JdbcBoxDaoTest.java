@@ -63,7 +63,7 @@ public class JdbcBoxDaoTest extends BaseDaoTests {
         Assert.assertTrue("create failed to return a product with an id", newId > 0);
 
         testBox.setBoxId(newId);
-        assertBoxesMatch("create returned product with wrong or partial data", testBox, createdBox);
+        assertBoxesMatch("create returned box with wrong or partial data", testBox, createdBox);
     }
 
     @Test
@@ -86,6 +86,22 @@ public class JdbcBoxDaoTest extends BaseDaoTests {
         Assert.assertEquals("searchByLocation failed to return all boxes", 3, boxes.size());
         assertBoxesMatch("searchByLocation returned wrong or partial data", BOX_1, boxes.get(0));
         assertBoxesMatch("searchByLocation returned wrong or partial data", BOX_3, boxes.get(2));
+    }
+
+    @Test
+    public void update_returns_updated_box() {
+        Box box = new Box();
+        box.setBoxId(BOX_1.getBoxId());
+
+        box.setUserId(2);
+        box.setCategoryId(2);
+        box.setStorageLocation("Basement");
+
+        Box updatedBox = dao.update(box);
+        int newId = updatedBox.getBoxId();
+        Box retrievedBox = dao.get(newId);
+
+        assertBoxesMatch("update did not save correct data", updatedBox, retrievedBox);
     }
 
 
