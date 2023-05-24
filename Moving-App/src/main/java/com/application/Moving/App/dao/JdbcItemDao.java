@@ -100,6 +100,7 @@ public class JdbcItemDao implements ItemDao {
         return items;
     }
 
+    @Override
     public List<Item> searchByLocation(String locationName) {
         List<Item> items = new ArrayList<>();
         String sql = "select i.item_id, i.user_id, bc.category_id, i.name, i.quantity, b.storage_location, i.description " +
@@ -118,6 +119,7 @@ public class JdbcItemDao implements ItemDao {
         return items;
     }
 
+    @Override
     public List<Item> searchByName(String itemName) {
         List<Item> items = new ArrayList<>();
         String sql = "select i.item_id, i.user_id, bc.category_id, i.name, i.quantity, b.storage_location, i.description " +

@@ -59,6 +59,8 @@ public interface ItemDao {
      */
     List<Item> searchByLocation(String location);
 
+    List<Item> searchByName(String itemName);
+
     /**
      * Adds a new item to the datastore.
      *
@@ -81,6 +83,9 @@ public interface ItemDao {
      * @return count of items removed
      */
     void delete(int itemId);
+
+
+
 
 
 }
